@@ -19,7 +19,7 @@ LIBOUT = $(LIBDIR)libcdict.a
 
 .phony: all build clean library
 
-all: build
+all: init build
 
 build: $(BINDIR)$(OUTFILE)
 
