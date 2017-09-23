@@ -39,6 +39,9 @@ clean:
 	-rm $(OBJDIR)*
 	-rm $(LIBDIR)*
 
+init:
+	-mkdir src include lib bin obj
+
 # additional dependencies
 
 $(SRCDIR)dict.c: $(INCDIR)dict.h $(INCDIR)dict_common.h
