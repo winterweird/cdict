@@ -1,6 +1,8 @@
 CC = gcc
+AR = ar
+ARFLAGS = -crv
 CFLAGS = -Wall -g -std=c99 -I$(INCDIR) -L$(LIBDIR)
-LIBS = -lm
+LIBS = -lm -lcdict
 
 INCDIR = include/
 LIBDIR = lib/
@@ -13,21 +15,29 @@ OUTFILE = main
 OBJECTS_BASE = dict dict_item dict_hash
 OBJECTS = $(addprefix $(OBJDIR),$(addsuffix .o,$(OBJECTS_BASE)))
 
-.phony: all build clean
+LIBOUT = $(LIBDIR)libcdict.a
+
+.phony: all build clean library
 
 all: build
 
 build: $(BINDIR)$(OUTFILE)
 
-$(BINDIR)$(OUTFILE): $(OBJDIR)$(OUTFILE).o $(OBJECTS)
-	$(CC) $(CFLAGS) -o $@ $< $(OBJECTS) $(LIBS)
+library: $(LIBOUT)
+
+$(BINDIR)$(OUTFILE): $(OBJDIR)$(OUTFILE).o library
+	$(CC) $(CFLAGS) -o $@ $< $(LIBS)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	$(CC) -c $(CFLAGS) -o $@ $<
 
+$(LIBOUT): $(OBJECTS)
+	$(AR) $(ARFLAGS) $@ $^
+
 clean:
 	-rm $(BINDIR)*
 	-rm $(OBJDIR)*
+	-rm $(LIBDIR)*
 
 # additional dependencies
 
