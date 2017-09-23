@@ -1,5 +1,4 @@
 AUTOMAKE_OPTIONS = foreign subdir-objects
-SUBDIRS = .
 
 CFLAGS = -Wall -g -std=c99 -I$(top_srcdir)/include
 
