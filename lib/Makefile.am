@@ -1,5 +1,3 @@
-AUTOMAKE_OPTIONS = subdir-objects
-
 AM_CFLAGS = -Wall -g -std=c99 -I$(top_srcdir)/include
 
 lib_LIBRARIES = libcdict.a
