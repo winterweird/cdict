@@ -87,6 +87,20 @@ static void rehashMap(dict* m) {
     *m = m2;
 }
 
+/**
+ * Helper function: add key to list of keys. Rellocate memory if necessary.
+ */
+static void addKey(dict* m, DictItem k) {
+    if (m->nKeys >= m->keyCapacity) {
+        m->keyCapacity *= 2;
+        m->keys = realloc(m->keys, m->keyCapacity * sizeof *m->keys);
+        if (m->keys == NULL) {
+            dict_error_memerror(m->keyCapacity * sizeof *m->keys);
+        }
+    }
+    m->keys[m->nKeys++] = k;
+}
+
 dict dict_new(int initialCapacity, double loadFactor) {
     dict m;
     
@@ -98,6 +112,13 @@ dict dict_new(int initialCapacity, double loadFactor) {
     m.loadFactor = loadFactor;
     if (m.loadFactor <= 0 || m.loadFactor > 1.0) {
         dict_error_message("Load factor must be between 0 and 1");
+    }
+    
+    m.nKeys = 0;
+    m.keyCapacity = m.capacity; // probably an okay initial value
+    m.keys = malloc(m.keyCapacity * sizeof *m.keys);
+    if (m.keys == NULL) {
+        dict_error_memerror(m.keyCapacity * sizeof *m.keys);
     }
     
     m.length = 0;
@@ -131,6 +152,8 @@ void dict_put(dict* m, DictItem k, DictItem v) {
         m->kvPairs[index]->v = v;
         m->kvPairs[index]->next = NULL;
         m->length++; // one more bucket is used
+        
+        addKey(m, k); // add key
     }
     else {
         DictKVPair* p = getFirstPairMatch(k, m->kvPairs[index]);
@@ -145,6 +168,8 @@ void dict_put(dict* m, DictItem k, DictItem v) {
             p->v = v;
             p->next = m->kvPairs[index];
             m->kvPairs[index] = p;
+
+            addKey(m, k); // add key
         }
         else {
             // can result in memory leak if not using setItemValue

@@ -1,4 +1,4 @@
-AC_INIT([cdist], [0.1], [veggitland@hotmail.com])
+AC_INIT([cdist], [0.2.0], [veggitland@hotmail.com])
 AM_INIT_AUTOMAKE
 AC_CHECK_TOOL(RANLIB, ranlib, :)
 AC_PROG_CC

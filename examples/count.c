@@ -26,14 +26,10 @@ int main(int argc, char** argv) {
         }
     }
 
-    for (size_t i = 0; i < d.capacity; i++) {
-        DictKVPair* p = d.kvPairs[i];
-        while (p != NULL) {
-            DictItem k = d.kvPairs[i]->k;
-            DictItem v = d.kvPairs[i]->v;
-            printf("%s: %d\n", k.item.s, v.item.i);
-            p = p->next;
-        }
+    for (size_t i = 0; i < d.nKeys; i++) {
+        DictItem k = d.keys[i];
+        DictItem v = dict_get(d, k);
+        printf("%s: %d\n", k.item.s, v.item.i);
     }
 
     return 0;

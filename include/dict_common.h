@@ -44,8 +44,11 @@ typedef struct _DictKVPair {
 typedef struct {
     unsigned int capacity;
     unsigned int length;
+    unsigned int nKeys;
+    unsigned int keyCapacity;
     double loadFactor;
     DictKVPair** kvPairs;
+    DictItem* keys;
 } dict;
 
 #endif /* CDICT_COMMON_H */
