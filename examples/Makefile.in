@@ -86,7 +86,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-noinst_PROGRAMS = count$(EXEEXT)
+noinst_PROGRAMS = count$(EXEEXT) custom$(EXEEXT)
 subdir = examples
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -100,6 +100,9 @@ PROGRAMS = $(noinst_PROGRAMS)
 am_count_OBJECTS = count.$(OBJEXT)
 count_OBJECTS = $(am_count_OBJECTS)
 count_LDADD = $(LDADD)
+am_custom_OBJECTS = custom.$(OBJEXT)
+custom_OBJECTS = $(am_custom_OBJECTS)
+custom_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -128,8 +131,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(count_SOURCES)
-DIST_SOURCES = $(count_SOURCES)
+SOURCES = $(count_SOURCES) $(custom_SOURCES)
+DIST_SOURCES = $(count_SOURCES) $(custom_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -181,7 +184,7 @@ INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
-LIBS = -lcdict
+LIBS = -lcdict -lm
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
@@ -244,6 +247,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CFLAGS = -Wall -g -std=c99 -I$(top_srcdir)/include -L$(top_srcdir)/lib
 count_SOURCES = count.c
+custom_SOURCES = custom.c
 all: all-am
 
 .SUFFIXES:
@@ -285,6 +289,10 @@ count$(EXEEXT): $(count_OBJECTS) $(count_DEPENDENCIES) $(EXTRA_count_DEPENDENCIE
 	@rm -f count$(EXEEXT)
 	$(AM_V_CCLD)$(LINK) $(count_OBJECTS) $(count_LDADD) $(LIBS)
 
+custom$(EXEEXT): $(custom_OBJECTS) $(custom_DEPENDENCIES) $(EXTRA_custom_DEPENDENCIES) 
+	@rm -f custom$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(custom_OBJECTS) $(custom_LDADD) $(LIBS)
+
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 
@@ -292,6 +300,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/count.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/custom.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
