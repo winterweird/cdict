@@ -51,7 +51,7 @@ double distance(coord* a, coord* b) {
 }
 
 int main(int argc, char** argv) {
-    dict m = dict_new(20, 0.75);
+    dict m = dict_new();
 
     dict_put(&m, mki(0), mkpair("(%d, %d)", 542, 349));
     dict_put(&m, mki(1), mkpair("(%d, %d)", 711, 142));

@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv) {
 
-    dict d = dict_new(100, 0.75);
+    dict d = dict_new();
     char str[80];
     int hasInput = 1;
     while (hasInput) {

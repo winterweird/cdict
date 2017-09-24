@@ -6,9 +6,15 @@
 #include "dict_hash.h"
 
 /**
+ * Create a new dict with initial capacity 16 and load factor 0.75 (mirrors
+ * defaults in Java HashMap).
+ */
+dict dict_new();
+
+/**
  * Create a new dict with the given inital capacity and load factor.
  */
-dict dict_new(int initialCapacity, double loadFactor);
+dict dict_new_custom(int initialCapacity, double loadFactor);
 
 /**
  * Add an item with key k and value v to the dict.

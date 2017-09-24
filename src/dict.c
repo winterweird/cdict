@@ -74,7 +74,7 @@ static DictItem copy(DictItem i) {
  * big.
  */
 static void rehashMap(dict* m) {
-    dict m2 = dict_new(m->capacity*2, m->loadFactor);
+    dict m2 = dict_new_custom(m->capacity*2, m->loadFactor);
     for (size_t i = 0; i < m->capacity; i++) {
         DictKVPair* p = m->kvPairs[i];
         while (p != NULL) {
@@ -101,7 +101,11 @@ static void addKey(dict* m, DictItem k) {
     m->keys[m->nKeys++] = k;
 }
 
-dict dict_new(int initialCapacity, double loadFactor) {
+dict dict_new() {
+    return dict_new_custom(16, 0.75);
+}
+
+dict dict_new_custom(int initialCapacity, double loadFactor) {
     dict m;
     
     m.capacity = initialCapacity;
