@@ -1,5 +1,6 @@
 bin/*
 obj/*
 lib/*
+!lib/Makefile.am
 *.swp
 .ycm_extra_conf.py
