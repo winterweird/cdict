@@ -7,11 +7,23 @@ work.
 
 ## Installation
 
-Clone this git repository, then run `make` (and if you'd like, `make install`,
-~~although I haven't added that make rule yet~~). This should build the library,
-which you can then copy to wherever you'd like, or do something else with. I
-don't know. Whatever works for you, I guess. Remember to also have access to the
-includes somehow!
+Clone this git repository:
+
+```
+git clone https://github.com/winterweird/cdict.git
+```
+
+Navigate to the cloned repository and run the following commands:
+
+```
+./configure
+make
+make install
+```
+
+(The last command may be ommitted if you don't actually want to install this
+library. It works just as well if you manually copy it and the include files to
+where you need to use it.)
 
 ## How to use
 
