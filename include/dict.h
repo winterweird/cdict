@@ -60,4 +60,19 @@ void dict_error_itemmessage(const char* msg, DictItem i);
  */
 void dict_error_apierror(const char* msg);
 
+/**
+ * Horrible, horrible macro for lazy people. May stop working without warning.
+ *
+ * This macro takes a dict object (not pointer), a type, and a DictItem key, and
+ * returns the data of the result of the regular dict_get return value with the
+ * given dictionary and key cast to the specified type. The macro casts to long
+ * first because it stops the compiler from complaining with a
+ * -Wpointer-to-int-cast warning. The reason it works is because the location in
+ *  memory of the data pointer and everything else in theory should start at
+ *  the same point because of the union. But I don't know if this is specified
+ *  in the standard or implementation dependent, so don't use this in production
+ *  code or whatever I guess.
+ */
+#define dict_get_t(dict, type, ditem) (type)((long)dict_get(dict, ditem).item.o.data)
+
 #endif /* CDICT_H */
