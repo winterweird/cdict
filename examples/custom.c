@@ -1,20 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "dict.h"
 #include <stdarg.h>
 #include <math.h> // sqrt
 
-// shorthand for make int
-#define mki dict_item_new_int
-
-// shorthand for make long
-#define mkl dict_item_new_long
-
-// shorthand for make string
-#define mks dict_item_new_string
-
-// shorthand for make custom1
-#define mkpair dict_item_new_custom1
+#define DICT_USE_SHORT_ALIAS
+#include "dict.h"
 
 typedef struct {
     int x;
@@ -53,18 +43,18 @@ double distance(coord* a, coord* b) {
 int main(int argc, char** argv) {
     dict m = dict_new();
 
-    dict_put(&m, mki(0), mkpair("(%d, %d)", 542, 349));
-    dict_put(&m, mki(1), mkpair("(%d, %d)", 711, 142));
+    dict_put(&m, dmki(0), mkpair("(%d, %d)", 542, 349));
+    dict_put(&m, dmki(1), mkpair("(%d, %d)", 711, 142));
 
-    DictItem a = dict_get(m, mki(0));
-    DictItem b = dict_get(m, mki(1));
+    DictItem a = dict_get(m, dmki(0));
+    DictItem b = dict_get(m, dmki(1));
     printf("Distance between %s and %s is %f\n", a.item.o.str, b.item.o.str,
             distance(a.item.o.data,b.item.o.data));
 
-    dict_put(&m, mkpair("(%d, %d)", 399, 400), mki(42));
-    dict_put(&m, mkpair("(%d, %d)", 400, 400), mki(45));
-    dict_put(&m, mkpair("(%d, %d)", 401, 401), mki(43));
-    dict_put(&m, mkpair("(%d, %d)", 399, 400), mki(44));
+    dict_put(&m, mkpair("(%d, %d)", 399, 400), dmki(42));
+    dict_put(&m, mkpair("(%d, %d)", 400, 400), dmki(45));
+    dict_put(&m, mkpair("(%d, %d)", 401, 401), dmki(43));
+    dict_put(&m, mkpair("(%d, %d)", 399, 400), dmki(44));
 
     printf("%d %d\n", dict_get(m, mkpair("(%d, %d)", 399, 400)).item.i,
             dict_get(m, mkpair("%d, %d)", 400, 400)).item.i);
