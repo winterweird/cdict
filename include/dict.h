@@ -75,4 +75,57 @@ void dict_error_apierror(const char* msg);
  */
 #define dict_get_t(dict, type, ditem) (type)((long)dict_get(dict, ditem).item.o.data)
 
+/**
+ * Slightly less horrible set of macros for lazy people.
+ * 
+ * If you're anything like me, you absolutely loathe having to type long
+ * function names and whatnot. Particularly things you type often. And this
+ * library comes with a bunch of long function names. You might even have to
+ * type them often.
+ *
+ * Avoid this problem by defining the macro "DICT_USE_SHORT_ALIAS" before
+ * including this header. This will define aliases "dmk<character>" where the
+ * character corresponds to the kind of item you want to make: i for int, l for
+ * long, c for char, d for double, s for string and o for object (read:
+ * everything else). Now instead of long and descriptive, yet inherently similar
+ * and thus confusing function names, you may instead use short and
+ * nondescriptive, yet inherently similar and thus confusing function names.
+ * You're welcome!
+ *
+ * (Note: does not attempt to redefine already defined macros which are
+ * coincidentally named the same as a short function alias.)
+ *
+ * (Also note that there is no short version of dict_item_new_null - you may
+ * shoot yourself in the foot if you'd like, but I'm not gonna make it easier
+ * for you than it already is.)
+ */
+
+#ifdef DICT_USE_SHORT_ALIAS
+
+#ifndef dmki
+#define dmki dict_item_new_int
+#endif /* dmki */
+
+#ifndef dmkl
+#define dmkl dict_item_new_long
+#endif /* dmkl */
+
+#ifndef dmkc
+#define dmkc dict_item_new_char
+#endif /* dmkc */
+
+#ifndef dmks
+#define dmks dict_item_new_string
+#endif /* dmks */
+
+#ifndef dmkd
+#define dmkd dict_item_new_double
+#endif /* dmkd */
+
+#ifndef dmko
+#define dmko dict_item_new_object
+#endif /* dmko */
+
+#endif /* DICT_USE_SHORT_ALIAS */
+
 #endif /* CDICT_H */
